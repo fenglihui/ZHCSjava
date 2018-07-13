@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "sourceMap": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "title": ["菜商一", "菜商二", "菜商三", "菜商四"],
+  "text": [{
+    "value": 335,
+    "name": "菜商一"
+  },
+    {
+      "value": 500,
+      "name": "菜商二"
+    },
+    {
+      "value": 234,
+      "name": "菜商三"
+    },
+    {
+      "value": 135,
+      "name": "菜商四"
+    }
+  ]
+}

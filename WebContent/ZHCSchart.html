@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/ZHCSchart.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <script type="text/javascript" src="js/select.js"></script>
+    <script type="text/javascript" src="js/Theme.js"></script>
+    <title>智慧菜市数据展示</title>
+</head>
+<body>
+<div id="title">
+    智慧菜市云平台数据展示
+</div>
+<div id="chart">
+    <div id="left-chart"></div>
+    <div id="middle-map">
+        <form method="get" action="formsubmit.php" id="chartsform">
+            <select name="year" id="year">
+                <option value="">选择年份</option>
+            </select>
+            <select name="month" id="month">
+                <option value="">选择月份</option>
+            </select>
+            <select name="days" id="days" onchange="submitForm()">
+                <option value="">选择日期</option>
+            </select>
+        </form>
+    </div>
+    <div id="right-chart"></div>
+    <div class="clear"></div>
+    <div id="bottom-chart"></div>
+</div>
+<script type="text/javascript">
+    var leftChart = echarts.init(document.getElementById('left-chart'),'macarons');
+    leftChart.setOption({
+        title: {
+            text: '数据图形化'
+        },
+        tooltip: {},
+        legend: {
+        },
+        dataset: {
+            // 这里指定了维度名的顺序，从而可以利用默认的维度到坐标轴的映射。
+            // 如果不指定 dimensions，也可以通过指定 series.encode 完成映射，参见后文。
+            dimensions: [],
+            source: [{}]
+        },
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: {},
+        series: []
+    });
+    leftChart.showLoading();
+    $.get('js/test.json').done(function (data) {
+        console.dir(data);
+        console.log("data",data);//看类型
+        console.log("data.categories:",data.categories);//观察类型
+        console.log("data.data:",data.data);
+        console.log(typeof(data));
+        leftChart.hideLoading();
+        leftChart.setOption({
+            dataset: {
+                // 这里指定了维度名的顺序，从而可以利用默认的维度到坐标轴的映射。
+                // 如果不指定 dimensions，也可以通过指定 series.encode 完成映射，参见后文。
+                dimensions:data.dimension,
+                source: data.source
+            },
+            series:data.series
+        });
+    });
+</script>
+<script type="text/javascript">
+    var rightChart = echarts.init(document.getElementById('right-chart'),'macarons');
+    rightChart.setOption({
+        title : {
+            text: '各用户合格率',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: []
+        },
+        series : [
+            {
+                name: '合格次数',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '50%'],
+                data:[{}],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    });
+    rightChart.showLoading();
+    $.get('js/pietest.json').done(function (data) {
+        console.dir(data);
+        console.log("data",data);//看类型
+        console.log("data.title:",data.title);//观察类型
+        console.log("data.text:",data.text);
+        console.log(typeof(data));
+        rightChart.hideLoading();
+        rightChart.setOption({
+            legend: {
+                data:data.title
+            },
+            series:[{
+                data:data.text
+            }]
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#date").selectDate()
+
+        $("#days").focusout(function(){
+            var year = $("#year option:selected").html()
+            var month = $("#month option:selected").html()
+            var day = $("#days option:selected").html()
+            console.log(year+month+day)
+        })
+
+    })
+</script>
+<script type="text/javascript">
+    function submitForm() {
+        $.ajax({
+            type:"get",
+            url:"Testservlet",
+            async:true,
+            data:{
+                "year":$("#year").val(),
+                "month":$("#month").val(),
+                "days":$("#days").val()
+            },
+            success:function (data) {
+                console.log("data.content:",data)
+            }
+        });
+    }
+</script>
+</body>
+</html>

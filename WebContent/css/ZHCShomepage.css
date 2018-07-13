@@ -1,0 +1,244 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#all{
+    width: 100%;
+    min-width: 1280px;
+    height: 100%;
+    min-height: 830px;
+    position: relative;
+    overflow: hidden;
+}
+#register{
+    position: absolute;
+    top: 25px;
+    left:50%;
+    margin-left: -489px;
+    width: 978px;
+}
+#register p{
+    padding: 0 10px;
+    float: right;
+}
+#register img{
+    margin-top: 20px;
+    float: right;
+}
+nav{
+    position: absolute;
+    top: 41px;
+    left: 50%;
+    margin-left:  -491px;
+
+}
+#title{
+    margin-top:0 ;
+    margin-left: 0;
+    width: 235px;
+    color: rgb(11, 92, 0);
+    font-family: "Microsoft YaHei";
+    float: left;
+}
+#nav-title{
+    position: absolute;
+    top: 11px;
+    left: 240px;
+    z-index: 1;
+}
+ul{
+    list-style: none;
+}
+#nav{
+    position: relative;
+    margin-top: 14px;
+    margin-left: 20px;
+    list-style: none;
+    float: left;
+    z-index: 11;
+}
+#nav li{
+    width: 100px;
+    height: 36px;
+    float: left;
+}
+#nav a{
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    line-height: 36px;
+    font-size: 14px;
+    color: #000000;
+}
+#nav a:hover,#nav a:active{
+    color: #FFFFFF;
+    background-color: #00cc2f;
+}
+#background-image{
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+}
+#input{
+    position: absolute;
+    top:250px ;
+    left: 57%;
+    background: url(../image/背景.png) no-repeat;
+    width: 350px;
+    height: 70px;
+}
+form{
+    position: relative;
+}
+#input-search{
+    margin-top: 10px;
+    margin-left: 10px;
+    padding-left: 30px;
+    width: 220px;
+    height: 30px;
+    border: 1px solid #FFFFFF;
+    background: #e5e5e5;
+    border-radius:5px;
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+    color: rgb( 73, 77, 80 );
+    float: left;
+}
+#search-icon{
+    position: absolute;
+    top:20px;
+    left: 18px;
+    z-index: 5;
+}
+#find-icon{
+    float: left;
+    display: block;
+    margin-top: 12px;
+    margin-left: 8px;
+    cursor: pointer;
+}
+a{
+    text-decoration: none;
+    color: rgb(106, 106, 106);
+    font-size: 12px;
+    font-family: "Microsoft YaHei";
+    text-align: left;
+}
+.link{
+    float: left;
+    margin-top: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+#down-line{
+    float: left;
+    margin-top: 20px;
+    background: rgb(106, 106, 106);
+    width: 1px;
+    height: 13px;
+}
+#life{
+    position: absolute;
+    top: 179px;
+    left: 56%;
+}
+#introduce-image{
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    margin-left: -490px;
+    z-index: 13;
+}
+#introduce{
+    position:absolute ;
+    top: 65%;
+    left: 50%;
+    margin-left: -490px;
+    z-index: 15;
+}
+.introduce{
+    float: left;
+    width: 327px;
+}
+.cursor{
+    margin-top: 12px;
+    margin-left: 16px;
+}
+.introduce-title{
+    font-size: 14px;
+    font-family: "SimSun";
+    color: rgb(51, 51, 51);
+}
+.english-title{
+    font-size: 10px;
+    font-family: "Arial";
+    color: rgb(153, 152, 152);
+}
+.small-image{
+    float: left;
+    margin-left: 16px;
+    margin-top: 22px;
+}
+.character{
+    float: left;
+    margin-top: 22px;
+    margin-left: 20px;
+    font-size: 12px;
+    font-family: "SimSun";
+    color: rgb(51, 51, 51);
+    width: 155px;
+}
+.character>ul{
+    list-style: none;
+}
+.second-ul li{
+    height: 17px;
+    line-height: 17px;
+    overflow: hidden;
+}
+.left-li{
+    float: left;
+}
+.right-li{
+    float: right;
+    font-size: 12px;
+    font-family: "SimSun";
+    color: rgb(51, 51, 51);
+}
+.second-ul li>a {
+    text-decoration: none;
+    font-size: 12px;
+    font-family: "SimSun";
+    color: rgb(51, 51, 51);
+}
+.position{
+    position: absolute;
+}
+footer{
+    position: absolute;
+    top:88%;
+    left:50%;
+    margin-left: -489px;
+    z-index: 1;
+    width: 978px;
+}
+.font-style{
+    position: relative;
+    margin-top: 7px;
+    font-size: 12px;
+    font-family: "Arial";
+    color: rgba(255, 255, 255, 0.502);
+    z-index: 11;
+    padding: 0 8px;
+}
+.font-style a{
+    text-decoration: none;
+}
+.font-float-left{
+    float: left;
+}
+.font-float-right{
+    float: right;
+}
