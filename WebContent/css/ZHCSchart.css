@@ -5,8 +5,8 @@ html,body{
 #title{
     width: 1800px;
     margin: 0 auto;
-    height: 100px;
-    line-height: 100px;
+    height: 70px;
+    line-height: 70px;
     text-align: center;
     font-size: 24px;
     color: #3c763d;
@@ -15,14 +15,12 @@ html,body{
     width: 1800px;
     margin: 0 auto;
 }
+#chart form{
+    margin: 0 auto;
+    text-align: center;
+}
 .clear{
     clear: both;
-}
-#left-chart,#middle-map,#right-chart{
-    position: relative;
-    float: left;
-    width: 600px;
-    height: 400px;
 }
 form{
     margin: 0 auto;
@@ -33,7 +31,47 @@ select{
     border-radius: 5px;
     outline: none;
 }
-#bottom-chart{
-    width: 100%;
+#map-excel-charts{
+    width: 1800px;
+    height:750px;
+    margin: 20px auto;
+}
+#left-map{
+    margin: 0 auto;
+    width: 60%;
+    height: 100%;
+    float: left;
+}
+#right-top-excel,#right-bottom-charts{
+    margin: 0 auto;
+    width: 40%;
+    height: 50%;
+    float: left;
+}
+#right-bottom-charts{
     margin-top: 30px;
+}
+#map-introduce{
+    float: right;
+    width: 350px;
+    height: 100%;
+    margin-right: 30px;
+}
+#map{
+    position: relative;
+    float: right;
+    width: 700px;
+    height: 100%;
+}
+#myList{
+    list-style: none;
+}
+#myList li{
+    cursor: pointer;
+}
+#food-market{
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 99;
 }

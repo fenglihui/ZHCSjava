@@ -7,6 +7,6 @@
 
     <servlet-mapping>
         <servlet-name>Testservlet</servlet-name>
-        <url-pattern>/com.servlet/Testservlet</url-pattern>
+        <url-pattern>/Servlet/Testservlet</url-pattern>
     </servlet-mapping>
 </web-app>

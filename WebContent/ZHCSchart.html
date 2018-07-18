@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <link rel="stylesheet" type="text/css" href="css/ZHCSchart.css">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
     <script type="text/javascript" src="js/echarts.js"></script>
     <script type="text/javascript" src="js/select.js"></script>
     <script type="text/javascript" src="js/Theme.js"></script>
@@ -14,26 +17,201 @@
     智慧菜市云平台数据展示
 </div>
 <div id="chart">
-    <div id="left-chart"></div>
-    <div id="middle-map">
         <form method="get" action="formsubmit.php" id="chartsform">
-            <select name="year" id="year">
-                <option value="">选择年份</option>
+            <select name="year" id="year" onchange="submitForm()">
+                <option value="2018" selected="selected">2018年</option>
             </select>
-            <select name="month" id="month">
-                <option value="">选择月份</option>
+            <select name="month" id="month" onchange="submitForm()">
+                <option value="01" selected="selected">01月</option>
             </select>
-            <select name="days" id="days" onchange="submitForm()">
-                <option value="">选择日期</option>
+            <select name="manage" id="manage" onchange="submitForm()">
+                <option value="基地菜" selected="selected">基地菜</option>
+            </select>
+            <select name="name" id="name" class="select" onchange="submitForm()">
+                <option value="玉米" selected="selected">玉米</option>
+            </select>
+            <select name="location" id="location" class="select" onchange="submitForm()">
+                <option value="攀枝花" selected="selected">攀枝花</option>
+            </select>
+            <select name="channels" id="channels" class="select" onchange="submitForm()">
+                <option value="百仁" selected="selected">百仁</option>
             </select>
         </form>
+</div>
+<div id="map-excel-charts">
+    <div id="left-map">
+        <div id="map-introduce">
+            <ul id="myList">
+
+            </ul>
+        </div>
+        <div id="map">
+            <form method="get">
+                <select name="food-market" id="food-market">
+                    <option value="1" selected="selected">青羊区</option>
+                    <option value="2">武侯区</option>
+                    <option value="3">金牛区</option>
+                </select>
+            </form>
+
+        </div>
+        <div class="clear"></div>
     </div>
-    <div id="right-chart"></div>
-    <div class="clear"></div>
-    <div id="bottom-chart"></div>
+    <div id="right-top-excel">
+
+    </div>
+    <div id="right-bottom-charts">
+
+    </div>
 </div>
 <script type="text/javascript">
-    var leftChart = echarts.init(document.getElementById('left-chart'),'macarons');
+    window.onload = $.ajax({
+        type:"GET",
+        url:"js/name.json",
+        dataType:"json",
+        success:function (data) {
+            var nameSel = document.getElementById("name");
+            var locationSel = document.getElementById("location");
+            var channelsSel = document.getElementById("channels");
+            console.log("data",data);//看类型
+            $.each(data.name,function (i,n) {
+                var nameOpt = document.createElement("option");
+                nameOpt.value = n.name;
+                nameOpt.innerHTML = n.name;
+                nameSel.appendChild(nameOpt);
+            });
+            $.each(data.location,function (i,n) {
+                var nameOpt = document.createElement("option");
+                nameOpt.value = n.location;
+                nameOpt.innerHTML = n.location;
+                locationSel.appendChild(nameOpt);
+            });
+            $.each(data.channels,function (i,n) {
+                var nameOpt = document.createElement("option");
+                nameOpt.value = n.channels;
+                nameOpt.innerHTML = n.channels;
+                channelsSel.appendChild(nameOpt);
+            });
+        }
+    });
+</script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.6&key=0f725c13d51ff337bba15656045c80b4"></script>
+<script src="http://webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+<script type="text/javascript">
+    var map = new AMap.Map('map',{zoom:9});
+    //加载MarkerList，loadUI的路径参数为模块名中 'ui/' 之后的部分
+    AMapUI.loadUI(['misc/MarkerList'], function(MarkerList) {
+        //启动页面
+        initPage(MarkerList);
+    });
+
+    function initPage(MarkerList) {
+        //创建一个实例
+        var markerList = new MarkerList({
+            map: map, //关联的map对象
+            listContainer: 'myList', //列表的dom容器的节点或者id, 用于放置getListElement返回的内容
+            getDataId: function(dataItem, index) {
+                //返回数据项的Id
+                return dataItem.id;
+            },
+            getPosition: function(dataItem) {
+                //返回数据项的经纬度，AMap.LngLat实例或者经纬度数组
+                return dataItem.position;
+            },
+            getMarker: function(dataItem, context, recycledMarker) {
+                var content =$("#food-market option:selected").text()+ '益民菜市' + (context.index + 1) + '号店',
+                    label = {
+                        offset: new AMap.Pixel(16, 18),
+                        content: content
+                    };
+
+                if (recycledMarker) {
+                    //存在可回收利用的marker,直接setLabel返回
+                    recycledMarker.setLabel(label);
+                    return recycledMarker;
+                }
+                //返回一个新的Marker
+                return new AMap.Marker({
+                    label: label
+                });
+            },
+            getInfoWindow: function(dataItem, context, recycledInfoWindow) {
+                var tpl = '<p class="my-btn"><%- dataItem.id %>：<%- dataItem.desc %></p><p class="address">地址：<%- dataItem.address %></p>';
+                //MarkerList.utils.template支持underscore语法的模板
+                var content = MarkerList.utils.template(tpl, {
+                    dataItem: dataItem,
+                    dataIndex: context.index
+                });
+                if (recycledInfoWindow) {
+                    //存在可回收利用的infoWindow, 直接setContent返回
+                    recycledInfoWindow.setContent(content);
+                    return recycledInfoWindow;
+                }
+                //返回一个新的InfoWindow
+                return new AMap.InfoWindow({
+                    offset: new AMap.Pixel(0, -23),
+                    content: content
+                });
+            },
+            getListElement: function(dataItem, context, recycledListElement) {
+                var tpl = '<p class="my-btn"><%- dataItem.id %>：<%- dataItem.desc %></p><p class="address">地址：<%- dataItem.address %></p>';
+                var content = MarkerList.utils.template(tpl, {
+                    dataItem: dataItem,
+                    dataIndex: context.index
+                });
+                if (recycledListElement) {
+                    //存在可回收利用的listElement, 直接更新内容返回
+                    recycledListElement.innerHTML = content;
+                    return recycledListElement;
+                }
+                //返回一段html，MarkerList将利用此html构建一个新的dom节点
+                return '<li>' + content + '</li>';
+            }
+        });
+
+        //监听选中改变
+        markerList.on('selectedChanged', function(event, info) {});
+
+        //监听Marker和ListElement上的点击，详见markerEvents，listElementEvents
+        markerList.on('markerClick listElementClick', function(event, record) {
+            Market = record.data.desc;
+            submitForm();
+        });
+        //利用ajax初始化数据
+        $.ajax({
+            type:"GET",
+            url:"js/market.json",
+            success:function (data) {
+                markerList.render(data.market1);
+            }
+        });
+        //构建数据源，数据项本身没有格式要求，但需要支持getDataId和getPosition
+        $("#food-market").change(function () {
+            var marketindex = $("#food-market option:selected").val();
+            //绘制数据源，Let's go!
+            $.ajax({
+                type:"GET",
+                url:"js/market.json",
+                success:function (data) {
+                    if(marketindex == 1){
+                        markerList.render(data.market1);
+                    }
+                    else if(marketindex == 2){
+                        markerList.render(data.market2);
+                    }
+                    else if (marketindex == 3){
+                        markerList.render(data.market3);
+                    }
+                }
+            });
+
+        });
+        //清除数据
+        //markerList.render([]);
+    }
+</script>
+<script type="text/javascript">
+    var leftChart = echarts.init(document.getElementById('right-top-excel'),'macarons');
     leftChart.setOption({
         title: {
             text: '数据图形化'
@@ -73,7 +251,7 @@
     });
 </script>
 <script type="text/javascript">
-    var rightChart = echarts.init(document.getElementById('right-chart'),'macarons');
+    var rightChart = echarts.init(document.getElementById('right-bottom-charts'),'macarons');
     rightChart.setOption({
         title : {
             text: '各用户合格率',
@@ -130,25 +308,60 @@
         $("#days").focusout(function(){
             var year = $("#year option:selected").html()
             var month = $("#month option:selected").html()
-            var day = $("#days option:selected").html()
-            console.log(year+month+day)
+            console.log(year+month)
         })
 
     })
 </script>
 <script type="text/javascript">
-    function submitForm() {
+    var Market = "益民菜市(长顺街店)";
+    var Year = $("#year option:selected").val();
+    var Month = $("#month option:selected").val();
+    var Manage = $("#manage option:selected").val();
+    var Name = $("#name option:selected").val();
+    var Location = $("#location option:selected").val();
+    var Channels = $("#channels option:selected").val();
+    window.onload = function () {
         $.ajax({
-            type:"get",
-            url:"Testservlet",
+            type:"GET",
+            url:"formsubmit.php",
             async:true,
             data:{
-                "year":$("#year").val(),
-                "month":$("#month").val(),
-                "days":$("#days").val()
+                "market":Market,
+                "year":Year,
+                "month":Month,
+                "manage":Manage,
+                "name":Name,
+                "location":Location,
+                "channels":Channels
             },
             success:function (data) {
-                console.log("data.content:",data)
+                console.log("window.onload.data:",data)
+            }
+        });
+    }
+    function submitForm() {
+        Year = $("#year option:selected").val();
+        Month = $("#month option:selected").val();
+        Manage = $("#manage option:selected").val();
+        Name = $("#name option:selected").val();
+        Location = $("#location option:selected").val();
+        Channels = $("#channels option:selected").val();
+        $.ajax({
+            type:"GET",
+            url:"formsubmit.php",
+            async:true,
+            data:{
+                "market":Market,
+                "year":Year,
+                "month":Month,
+                "manage":Manage,
+                "name":Name,
+                "location":Location,
+                "channels":Channels
+            },
+            success:function (data) {
+                console.log("change.data.content:",data);
             }
         });
     }

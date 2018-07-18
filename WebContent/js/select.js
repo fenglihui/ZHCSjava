@@ -1,59 +1,33 @@
 $.fn.selectDate = function(){
-			var minYear = 2012
-			var maxYear = (new Date).getFullYear()
-			var yearSel = document.getElementById('year')
-			var monthSel = document.getElementById('month')
-			var daySel = document.getElementById('days')
+			var minYear = 2012;
+			var maxYear = (new Date).getFullYear()-1;
+			var minManage = 1;
+			var maxManage = 50;
+			var yearSel = document.getElementById('year');
+			var monthSel = document.getElementById('month');
+			var manageSel = document.getElementById('manage');
 	
 			for(var y = maxYear;y >= minYear;y--){
-				var yearOpt = document.createElement('option')
+				var yearOpt = document.createElement('option');
 				yearOpt.value = y
 				yearOpt.innerHTML = y+'年'
 				yearSel.appendChild(yearOpt)
 			}
-
-			$("#year").click(function(event){
-				if(!$("#year option:selected").val()) return;
-				removeOption(monthSel)
-				addOption(12,'月',monthSel)
-				removeOption(daySel)
-			})
-
-			$("#month").click(function(){
-				removeOption(daySel)
-				var year = $("#year option:selected").val()
-				var month = $("#month option:selected").val()
-				if(month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12){
-					addOption(31,'日',daySel)
-				}else if(month==4 || month==6 || month==9 || month==11){
-					addOption(30,'日',daySel)
-				}else if(month==2){
-					if((year%4 == 0 && year%100 != 0 ) || (year%400 == 0)){
-						addOption(29,'日',daySel)
-					}else{	
-						addOption(28,'日',daySel)
-					}
+			for(var n =2;n<=12;n++){
+				var monthOpt = document.createElement('option');
+                monthOpt.value = n;
+				if( n<10){
+					monthOpt.innerHTML = '0' + n + '月';
 				}
-			})
-
-			function addOption(num,unit,parent){
-				//num：选项个数
-				//unit：单位（年/月/日）
-				//parent：父对象
-				for(var index=1;index <= num;index++){
-					var opt =document.createElement('option')
-					$(opt).attr('value',index)
-					if(index<10){index = '0'+index}
-					$(opt).html(index+unit)
-					$(parent).append(opt)
+				else{
+					monthOpt.innerHTML = n + '月';
 				}
+				monthSel.appendChild(monthOpt);
 			}
-			
-			function removeOption(parent){
-				//parent：父对象
-				var options = $(parent).find('option')
-				for(var index = 1;index < options.length;index++){
-					parent.removeChild(options[index])
-				}
+			for(var m =minManage;m<=maxManage;m++){
+				var manageOpt = document.createElement('option');
+				manageOpt.value ='蔬菜' + m + '号';
+				manageOpt.innerHTML = '蔬菜' + m + '号'
+				manageSel.appendChild(manageOpt);
 			}
 		}

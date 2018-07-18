@@ -1,0 +1,77 @@
+{
+  "name": [{
+    "name": "洋葱"
+  }, {
+    "name": "小青椒"
+  }, {
+    "name": "西兰花"
+  }, {
+    "name": "莴笋尖"
+  }, {
+    "name": "四季豆"
+  },
+    {
+      "name": "芹菜"
+    }, {
+      "name": "茄子"
+    }, {
+      "name": "莲藕"
+    }, {
+      "name": "莲花白"
+    }, {
+      "name": "老南瓜"
+    }, {
+      "name": "红苕"
+    }, {
+      "name": "韭菜"
+    }, {
+      "name": "鸡心白"
+    }, {
+      "name": "黄瓜"
+    }, {
+      "name": "花菜"
+    }, {
+      "name": "胡萝卜"
+    }, {
+      "name": "高笋"
+    }, {
+      "name": "蔊菜"
+    }, {
+      "name": "白萝卜"
+    }
+  ],
+  "location": [{
+    "location": "河北"
+  }, {
+    "location": "夹江"
+  }, {
+    "location": "郫县"
+  }, {
+    "location": "双流"
+  }, {
+    "location": "绵阳"
+  },
+    {
+      "location": "米县"
+    }, {
+      "location": "崇州"
+    }, {
+      "location": "海南"
+    }, {
+      "location": "简阳"
+    }, {
+      "location": "西昌"
+    }
+  ],
+  "channels": [{
+    "channels": "青石桥"
+  }, {
+    "channels": "子云路"
+  }, {
+    "channels": "白家"
+  }, {
+    "channels": "黄龙溪"
+  }, {
+    "channels": "友联"
+  }]
+}

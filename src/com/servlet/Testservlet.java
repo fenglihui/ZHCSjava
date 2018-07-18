@@ -2,6 +2,8 @@ package com.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.*;
+import com.DB.MysqlDB;
 import com.information.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,6 +39,9 @@ public class Testservlet extends HttpServlet {
 		String month = request.getParameter("month");
 		String days = request.getParameter("days");
 		System.out.println("year:"+year+";"+"month:"+month+";"+"day:"+days);
+		MysqlDB mysqldb = new MysqlDB();
+		Connection connection=mysqldb.getConnection();
+		String sql = "INSERT INTO collectdate VALUES (year,month,days)";
 		User user = new User();
 		user.setYear(year);
 		user.setMonth(month);
