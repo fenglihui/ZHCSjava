@@ -3,8 +3,8 @@ package com.DB;
 import java.sql.*;
 
 public class MysqlDB {
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-    static final String DB_URL = "jdbc:mysql://localhost:3306/zhcstest";
+	static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";  
+    static final String DB_URL = "jdbc:mysql://localhost:3306/zhcstest?serverTimezone=GMT";
     static final String USER = "root";
     static final String PASS = "root"; 
     private static Connection connection = null;

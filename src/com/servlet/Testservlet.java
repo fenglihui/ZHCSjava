@@ -37,16 +37,24 @@ public class Testservlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String year = request.getParameter("year");
 		String month = request.getParameter("month");
-		String days = request.getParameter("days");
-		System.out.println("year:"+year+";"+"month:"+month+";"+"day:"+days);
+		//String days = request.getParameter("days");
+		String market = request.getParameter("market");
+		String name = request.getParameter("name");
+		String manage = request.getParameter("manage");
+		String location = request.getParameter("location");
+		String channels = request.getParameter("channels");
+		System.out.println("year:"+year+";"+"month:"+month+";"+"market:"+market+";"+"manage:"+manage+";"+"name:"+name+";"+"location:"+location+";"+"channels"+channels+";");
 		MysqlDB mysqldb = new MysqlDB();
 		Connection connection=mysqldb.getConnection();
-		String sql = "INSERT INTO collectdate VALUES (year,month,days)";
 		User user = new User();
 		user.setYear(year);
 		user.setMonth(month);
-		user.setDays(days);
-		String data = year + month + days;
+		user.setMarket(market);
+		user.setManage(manage);
+		user.setName(name);
+		user.setLocation(location);
+		user.setChannels(channels);
+		String data = year + month + market + manage + name + location + channels;
 		out.println(data);
 	}
 
